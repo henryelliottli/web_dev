@@ -1,0 +1,9 @@
+.share{
+    display: flex;
+    justify-content: center;
+}
+
+.share img {
+    max-height: 2.0rem;
+
+}
