@@ -11,3 +11,5 @@ body * {
   color:           unset;
   text-decoration: unset;
 }
+
+figure * { display:block}
