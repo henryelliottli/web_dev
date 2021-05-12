@@ -37,7 +37,6 @@
 const hamburgerButton = document.querySelector("#hamburger_button");
 const nav_menu_overlay = document.querySelector('#nav_menu_overlay');
 
-
 function triggerOverlay(){
 
     hamburgerButton.children[0].classList.toggle("open-first-child");
@@ -72,9 +71,6 @@ hamburgerButton.addEventListener('click', triggerOverlay);
 nav_menu_overlay.addEventListener('click',triggerOverlay);
 
 window.addEventListener('resize', removeOverlayForDesktop);
-
-
-
 
 // Add class 'active' to section when near top of viewport
 
