@@ -37,17 +37,7 @@
 const hamburgerButton = document.querySelector("#hamburger_button");
 const nav_menu_overlay = document.querySelector('#nav_menu_overlay');
 
-hamburgerButton.addEventListener('click', function () {
-    hamburgerButton.children[0].classList.toggle("open-first-child");
-    hamburgerButton.children[1].classList.toggle("open-second-child");
-    hamburgerButton.children[2].classList.toggle("open-third-child");
-    document.querySelector('#ham_overlay').classList.toggle('overlay');
-    nav_menu_overlay.classList.toggle('display_menu');
-    document.querySelector('body').classList.toggle('no_scroll');
-  });
-
-
-nav_menu_overlay.addEventListener('click',function(){
+function triggerOverlay(){
 
     hamburgerButton.children[0].classList.toggle("open-first-child");
     hamburgerButton.children[1].classList.toggle("open-second-child");
@@ -55,11 +45,9 @@ nav_menu_overlay.addEventListener('click',function(){
     document.querySelector('#ham_overlay').classList.toggle('overlay');
     nav_menu_overlay.classList.toggle('display_menu');
     document.querySelector('body').classList.toggle('no_scroll');
-});
-
-//
-window.addEventListener('resize', function(){
-    if (window.matchMedia("(min-width: 440px)").matches && nav_menu_overlay.classList.contains('display_menu')) {
+}
+function removeOverlayForDesktop(){
+    if (window.matchMedia("(min-width: 760px)").matches && nav_menu_overlay.classList.contains('display_menu')) {
         hamburgerButton.children[0].classList.remove("open-first-child");
         hamburgerButton.children[1].classList.remove("open-second-child");
         hamburgerButton.children[2].classList.remove("open-third-child");
@@ -67,7 +55,23 @@ window.addEventListener('resize', function(){
         nav_menu_overlay.classList.remove('display_menu');
         document.querySelector('body').classList.remove('no_scroll');
     }
-});
+}
+
+function sayHello(){
+    section3.scrollIntoView({
+               behavior: "smooth",
+    });
+}
+
+
+// build the overlay
+
+hamburgerButton.addEventListener('click', triggerOverlay);
+
+nav_menu_overlay.addEventListener('click',triggerOverlay);
+
+window.addEventListener('resize', removeOverlayForDesktop);
+
 
 
 // Add class 'active' to section when near top of viewport
