@@ -72,8 +72,6 @@ nav_menu_overlay.addEventListener('click',triggerOverlay);
 
 window.addEventListener('resize', removeOverlayForDesktop);
 
-
-
 // Add class 'active' to section when near top of viewport
 
 
