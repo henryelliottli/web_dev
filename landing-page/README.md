@@ -9,3 +9,16 @@ Features:
 3. Add a section will automatically generate a new section in the navbar
 4. Sending an email currently does nothing, but can be added later
 
+Files:
+
+index.html
+  -html code
+  
+css/styles.css
+  -css styles
+  
+js/app.js
+  -JavaScript code
+  -creates navbar items when page loads
+  -responsive design for hamburger button and overlay
+  -highlights current section
