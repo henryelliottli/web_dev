@@ -1,6 +1,4 @@
-# Landing Page Template
-
-# Responsive Landing page with design
+# Responsive Landing Page Template
 ***
 List of Technologies:
 HTML, CSS, JavaScript (no jQuery)
