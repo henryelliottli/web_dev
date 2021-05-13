@@ -11,14 +11,14 @@ Features:
 
 Files:
 
-index.html
-  -html code
+1. index.html
+   -html code
   
-css/styles.css
-  -css styles
+2. css/styles.css
+   -css styles
   
-js/app.js
-  -JavaScript code
-  -creates navbar items when page loads
-  -responsive design for hamburger button and overlay
-  -highlights current section
+3. js/app.js
+   -JavaScript code
+   -creates navbar items when page loads
+   -responsive design for hamburger button and overlay
+   -highlights current section
