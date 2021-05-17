@@ -1,8 +1,9 @@
 // Setup empty JS object to act as endpoint for all routes
-let projectData = {
+let projectData = [{
     animal : "lion",
     fact : "lions are fun"
-};
+}
+]
 
 // Require Express to run server and routes
 const express = require('express');
@@ -38,5 +39,7 @@ app.get('/get-animals',function(request, response){
 
 //post
 app.post('/add-animals',function(request, response){
-    console.log(request.body);
+    console.log("this is the");
+    projectData.push(request.body);
+    console.log(projectData);
 })
