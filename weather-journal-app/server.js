@@ -1,9 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-let projectData = [{
-    animal : "lion",
-    fact : "lions are fun"
-}
-]
+let projectData = [];
 
 // Require Express to run server and routes
 const express = require('express');
@@ -17,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Cors for cross origin allowance
 const cors = require('cors');
+const { send } = require('process');
 app.use(cors());
 
 // Initialize the main project folder
@@ -33,13 +30,28 @@ function listening(){
 // Setup Server
 
 //get
-app.get('/get-animals',function(request, response){
-    response.send(projectData);
+app.get('/get-latest-weather',function(request, response){
+    console.log("inside get function");
+    const len = Object.keys(projectData).length;
+    let limit = (len <= 5) ? len : 5;
+    console.log(projectData.slice(len-limit,len).reverse())
+    response.json(projectData.slice(len-limit,len).reverse());
+})
+
+app.get('/get-all',function(request,response){
+    response.send(projectData)
 })
 
 //post
-app.post('/add-animals',function(request, response){
-    console.log("this is the");
-    projectData.push(request.body);
+app.post('/post-weather',function(request, response){
+    newEntry = {
+        location : request.body.name,
+        temperature : Math.ceil(parseInt(request.body.main.temp)-273.15),
+        weather : request.body.weather[0].description,
+        icon: request.body.weather[0].icon,
+        feelings: request.body.feelings
+    }
+    projectData.push(newEntry);
     console.log(projectData);
+    response.send(newEntry)
 })

@@ -1,10 +1,11 @@
 /* Global Variables */
+const baseURL = `http://api.openweathermap.org/data/2.5/weather?zip=` ;
+const apiKey = `&appid=dfa4cf94775b0862d2176c4195234902`;
 
 //buttons
 const generate = document.querySelector('#generate');
-const test = document.querySelector('#test');
 //const fav = document.querySelector('#feelings').value;
-const fav = {"animal" : "tiger", "fact" : "tigers are fun"};
+const fav = {};
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -13,25 +14,57 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 //eventlistners for click
 function addEvents(){
     generate.addEventListener('click',performAction);
-    test.addEventListener('click',function(){
-        console.log("Test");
-    })
 }
 
 //get API
 
 function performAction(e){
     e.preventDefault();
-    const val = document.querySelector('#feelings').value;
-    console.log('this is the value' + val);
+    const feelingNotes = document.querySelector('#feelings').value;
+    const zipCode = document.querySelector('#zip').value;
+    getWeather(baseURL,zipCode,apiKey,feelingNotes)
+    .then(weatherArray => {
+        for (i = 1; i <= weatherArray.length; i++){
+            document.querySelector(`#entryHolder${i} .date`).innerText = newDate + " in "+ weatherArray[i-1].location;
+            document.querySelector(`#entryHolder${i} .temp`).innerText = weatherArray[i-1].temperature + " degrees Celsius";
+            document.querySelector(`#entryHolder${i} .icon`).innerHTML =  `<img src=http://openweathermap.org/img/wn/${weatherArray[i-1].icon}@2x.png>`;
+            document.querySelector(`#entryHolder${i} .content`).innerText ="Content: " + weatherArray[i-1].feelings;
+        }
+        console.log("this is weatherArray ")
+        console.log(weatherArray)
+    })
+    
+    /*
     getAnimalsDemo('/get-animals')
     .then(function(data){
-        console.log(data[0])
-        postData('/add-animals', {animal: data[0].animal, fact: val})
-    });
+        
+        return postData('/add-animals', animalFact)
+    })
+    .then(function(data){
+        console.log("inside the post function ")
+        console.log(data);
+        updateUI(data);
+    })
+    .catch((error)=> {
+        console.log(error,"error")
+    })
+    ;*/
 }
 
-const getAnimalsDemo = async function(url){
+const getWeather = async function(baseURL, zipcode, APIkey,feelingNotes){
+    const weatherData = await fetch(baseURL+zipcode+APIkey)
+    try{
+        let dataJSON = await weatherData.json();
+        dataJSON["feelings"] = feelingNotes;
+        postData('/post-weather',dataJSON);
+        return getLatest('/get-latest-weather');
+    }catch(error){
+        console.log("error",error)
+    }
+    
+}
+
+const getLatest = async function(url){
     const res = await fetch(url);
     try{
         const data = await res.json();
@@ -44,25 +77,31 @@ const getAnimalsDemo = async function(url){
 }
 
 //POSTCall
-const postData = async function(url ='', dataInput={}){
-    const res = await fetch(url,{
-        method: 'POST',
-        credentials: 'same-origin',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataInput)
-    });
-
-    try{
-        const newData = await res.json();
-        console.log("here");
-        return newData;    
-    }catch(error){
-        console.log("error",error)
-    }
+const postData = async function(url ='', dataInput={}) {
+     try{
+        const res = await fetch(url,{
+            method: 'POST',
+            credentials: 'same-origin',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataInput)
+        });
+         const newData = await res.json();
+         console.log(newData);
+         return newData
+     }catch(error){
+         console.log("error",error)
+     }
 }
-
+//update UI
+/*const updateUI = async function(){
+    const lastUpdate = await getLatest('/get-latest-weather');
+    console.log("the updateUI says");
+    console.log(lastUpdate);
+    document.querySelector('#date').innerText = lastUpdate.location;
+    document.querySelector('#temp').innerText = lastUpdate.temperature;
+}*/
 
 
 
