@@ -30,25 +30,9 @@ function performAction(e){
             document.querySelector(`#entryHolder${i} .icon`).innerHTML =  `<img src=http://openweathermap.org/img/wn/${weatherArray[i-1].icon}@2x.png>`;
             document.querySelector(`#entryHolder${i} .content`).innerText ="Content: " + weatherArray[i-1].feelings;
         }
-        console.log("this is weatherArray ")
-        console.log(weatherArray)
+        document.querySelector('#zip').value='';
+        document.querySelector('#feelings').value='';    
     })
-    
-    /*
-    getAnimalsDemo('/get-animals')
-    .then(function(data){
-        
-        return postData('/add-animals', animalFact)
-    })
-    .then(function(data){
-        console.log("inside the post function ")
-        console.log(data);
-        updateUI(data);
-    })
-    .catch((error)=> {
-        console.log(error,"error")
-    })
-    ;*/
 }
 
 const getWeather = async function(baseURL, zipcode, APIkey,feelingNotes){
@@ -88,21 +72,25 @@ const postData = async function(url ='', dataInput={}) {
             body: JSON.stringify(dataInput)
         });
          const newData = await res.json();
-         console.log(newData);
+         //console.log(newData);
          return newData
      }catch(error){
          console.log("error",error)
      }
 }
 //update UI
-/*const updateUI = async function(){
-    const lastUpdate = await getLatest('/get-latest-weather');
-    console.log("the updateUI says");
-    console.log(lastUpdate);
-    document.querySelector('#date').innerText = lastUpdate.location;
-    document.querySelector('#temp').innerText = lastUpdate.temperature;
-}*/
-
+const updateUI = async function(){
+    await getLatest('/get-latest-weather')
+    .then(weatherArray => {
+        for (i = 1; i <= weatherArray.length; i++){
+            document.querySelector(`#entryHolder${i} .date`).innerText = newDate + " in "+ weatherArray[i-1].location;
+            document.querySelector(`#entryHolder${i} .temp`).innerText = weatherArray[i-1].temperature + " degrees Celsius";
+            document.querySelector(`#entryHolder${i} .icon`).innerHTML =  `<img src=http://openweathermap.org/img/wn/${weatherArray[i-1].icon}@2x.png>`;
+            document.querySelector(`#entryHolder${i} .content`).innerText ="Content: " + weatherArray[i-1].feelings;
+        }
+    })
+}
 
 
 addEvents();
+updateUI();

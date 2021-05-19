@@ -1,12 +1,10 @@
 body{
-    background: #fffff8;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 #app{
     display: flex;
     flex-direction: column;
-    height:100vh;
     background: #f23557;
     color: #f0d43a;
     justify-content: space-between;
@@ -14,18 +12,21 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
-#app .entries{
-    border: 10px;
-    border-color:black;
-    color: green;
+#journal-entries{
+    display:flex;
+    justify-content: space-between;
 }
-
+.entries{
+    border: 2px solid black;
+    min-width: 100px;
+    padding: 10px;
+}
 .entry{
     background: rgba(59, 74, 107, .4);
 }
 
 #entryHolder{
-
+    background-color: grey;
 }
 
 #date{
@@ -41,7 +42,8 @@ body{
 }
 
 .headline {
-
+    font-size:xx-large;
+    font-weight: bolder;
 }
 .title{
 
@@ -84,6 +86,8 @@ textarea{
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
 }
+
+
 /* Reset style for HTML element on active to have no border*/
 input:focus,
 select:focus,
