@@ -46,7 +46,7 @@ app.get('/get-all',function(request,response){
 app.post('/post-weather',function(request, response){
     newEntry = {
         location : request.body.name,
-        temperature : Math.ceil(parseInt(request.body.main.temp)-273.15),
+        temperature : request.body.main.temp,
         weather : request.body.weather[0].description,
         icon: request.body.weather[0].icon,
         feelings: request.body.feelings
