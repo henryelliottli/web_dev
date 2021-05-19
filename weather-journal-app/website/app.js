@@ -1,6 +1,6 @@
 /* Global Variables */
 const baseURL = `http://api.openweathermap.org/data/2.5/weather?zip=` ;
-const apiKey = `&appid=dfa4cf94775b0862d2176c4195234902`;
+const apiKey = `&appid=dfa4cf94775b0862d2176c4195234902&units=metric`;
 
 //buttons
 const generate = document.querySelector('#generate');
@@ -9,7 +9,7 @@ const fav = {};
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + 1 +'.'+ d.getDate()+'.'+ d.getFullYear();
 
 //eventlistners for click
 function addEvents(){
