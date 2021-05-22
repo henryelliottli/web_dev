@@ -1,6 +1,7 @@
 /* Global Variables */
 const baseURL = `http://api.openweathermap.org/data/2.5/weather?zip=` ;
-const apiKey = `&appid=dfa4cf94775b0862d2176c4195234902&units=metric`;
+const apiCall = `&appid=${apiKey}&units=metric`;
+const apiKey = ``;
 
 //buttons
 const generate = document.querySelector('#generate');
@@ -22,7 +23,7 @@ function performAction(e){
     e.preventDefault();
     const feelingNotes = document.querySelector('#feelings').value;
     const zipCode = document.querySelector('#zip').value;
-    getWeather(baseURL,zipCode,apiKey,feelingNotes)
+    getWeather(baseURL,zipCode,apiCall,feelingNotes)
     .then(weatherArray => {
         for (i = 1; i <= weatherArray.length; i++){
             document.querySelector(`#entryHolder${i} .date`).innerText = newDate + " in "+ weatherArray[i-1].location;
@@ -35,8 +36,8 @@ function performAction(e){
     })
 }
 
-const getWeather = async function(baseURL, zipcode, APIkey,feelingNotes){
-    const weatherData = await fetch(baseURL+zipcode+APIkey)
+const getWeather = async function(baseURL, zipcode, apiCall,feelingNotes){
+    const weatherData = await fetch(baseURL+zipcode+apiCall)
     try{
         let dataJSON = await weatherData.json();
         dataJSON["feelings"] = feelingNotes;
