@@ -5,11 +5,13 @@ import Form from './components/form';
 import ToDoList from './components/ToDoList';
 
 function App() {
+  //setState variables
   const [inputText, setInputText] = useState('');
-  const [toDos, setToDos] = useState(JSON.parse(localStorage.getItem("ToDoList")));
+  const [toDos, setToDos] = useState([]);
   const [status, setStatus] = useState('all');
   const [filteredToDos, setFilterToDos] = useState([]);
 
+  //handlers for filtering
   const filterHandler = () =>{
     if (status === "all"){
       return toDos
@@ -24,37 +26,46 @@ function App() {
       alert("this is not a valid filter")
     }
   }
+
+  //get Todos from database
+  const getAllTodos = async ()=>{
+    const response = await fetch("http://localhost:5000/todos",{
+      method : "GET"
+    })
+    const data = await response.json();
+    setToDos(data);
+  };
+
   //rerender everytime status and toDos changes 
   React.useEffect(()=>{
     setFilterToDos(filterHandler);
   },[toDos, status])
+  //render once when application starts
+  React.useEffect(()=> {
+    getAllTodos();
+  },[])
 
-  React.useEffect(()=>{
-    saveToDos();
-    console.log(JSON.parse(localStorage.getItem("ToDoList")))
-  })
 
-  function saveToDos() {
-    if (localStorage.getItem("ToDoList") === null){
-      window.localStorage.setItem("ToDoList",JSON.stringify([]));  
-    }
-    else{
-      window.localStorage.setItem("ToDoList",JSON.stringify(toDos));
-    }
-  }
+
+  // function saveToDos() {
+  //   if (localStorage.getItem("ToDoList") === null){
+  //     window.localStorage.setItem("ToDoList",JSON.stringify([]));  
+  //   }
+  //   else{
+  //     window.localStorage.setItem("ToDoList",JSON.stringify(toDos));
+  //   }
+  // }
 
   return (
     <div className="App">
       <header>Henry's ToDo List</header>
+      {/* <button onClick = {getAllTodos}>HERE</button> */}
       <Form 
         inputText = {inputText} 
         setInputText = {setInputText} 
         setToDos = {setToDos} 
         toDos = {toDos}
-        filteredToDos = {filteredToDos} 
         setStatus = {setStatus}
-        setFilterToDos = {setFilterToDos}
-        filterHandler = {filterHandler}
         />
       <ToDoList 
         toDos={toDos} 
