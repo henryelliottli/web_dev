@@ -1,6 +1,6 @@
 import React from 'react'; //imported from node modules
 
-const Form = ({inputText,setInputText, setToDos, toDos, filteredToDos, setStatus, setFilterToDos, filterHandler}) => {
+const Form = ({inputText,setInputText, setToDos, toDos, setStatus}) => {
     //writing JS code
 
     const inputTextHandler = (event) =>{
@@ -9,7 +9,19 @@ const Form = ({inputText,setInputText, setToDos, toDos, filteredToDos, setStatus
 
     const onSubmitHandler = async (event) => {
       event.preventDefault();
-      setToDos([...toDos, {text: inputText, completed: false, id: Math.random()*10000}]);
+      try {
+        const body = {description : inputText, completed: false};
+        const response = await fetch("http://localhost:5000/todos",{
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(body)
+        }); 
+        const data = await response.json();
+        setToDos([...toDos, {description: inputText, completed: false, todo_id: data.todo_id}]);
+      } catch (error) {
+        console.error(error);
+      }
+
       setInputText('');
     }
 

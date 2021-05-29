@@ -1,7 +1,7 @@
 import React from 'react';
 import Todo from './Todo';
 
-const ToDoList = ({toDos, setToDos, filteredToDos, status, setFilterToDos}) => {
+const ToDoList = ({toDos, setToDos, filteredToDos}) => {
     
     return (
         <div className="todo-container">
@@ -10,13 +10,10 @@ const ToDoList = ({toDos, setToDos, filteredToDos, status, setFilterToDos}) => {
             filteredToDos.map((e) => {
               return (
                 <Todo 
-                  key = {e.id} 
+                  key = {e.todo_id} 
                   todo = {e} 
                   setToDos = {setToDos} 
-                  toDos = {toDos} 
-                  filteredToDos = {filteredToDos} 
-                  setFilterToDos ={setFilterToDos} 
-                  status = {status}/>
+                  toDos = {toDos}/>
               )
             })
           }
